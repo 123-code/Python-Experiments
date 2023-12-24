@@ -30,7 +30,7 @@ data_loader = ImageLoader()
 client = chromadb.PersistentClient(path="/users/joseignacionaranjo/Downloads/chroma")
 
 
-
+#python-experiments-production.up.railway.app
 
 collection = client.create_collection(
          name = "photosembedding1234",
