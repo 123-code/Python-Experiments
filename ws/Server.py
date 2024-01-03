@@ -4,6 +4,10 @@ from chromadb.utils.data_loaders import ImageLoader
 from flask import Flask, request, jsonify
 import os 
 
+
+token = os.environ.get("CHROMA_TOKEN") 
+
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -32,22 +36,23 @@ def upload_image():
         return jsonify({'error': 'no file'}), 400
 
 
-@app.route('/chromadb')
+@app.route('/chromadb',methods=['POST'])
 def chromadb_route():
+    collection_name = request.form.get('collection_name')
     embedding_function = OpenCLIPEmbeddingFunction()
     image_loader = ImageLoader()
     
     client = chromadb.HttpClient(
         host="18.234.181.227",
         port=8000,
-        headers={"X-Chroma-Token": "sk-mytoken"}
+        headers={"X-Chroma-Token": token}
     )
     
     collections = client.list_collections()
     print(collections)
     
     collection = client.create_collection(
-        name='multimodal_collection',
+        name=collection_name,
         embedding_function=embedding_function,
         data_loader=image_loader
     )
