@@ -1,2 +1,4 @@
 flask 
 gunicorn 
+chromadb
+open-clip-torch
