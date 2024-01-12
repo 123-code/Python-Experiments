@@ -3,10 +3,11 @@ from chromadb.utils.embedding_functions import OpenCLIPEmbeddingFunction
 from chromadb.utils.data_loaders import ImageLoader
 from flask import Flask, request, jsonify
 import os 
+from image_to_numpy import image_to_array
 
-
+image_directory = './uploads'
 token = os.environ.get("CHROMA_TOKEN") 
-
+global collection
 
 app = Flask(__name__)
 
@@ -56,8 +57,31 @@ def chromadb_route():
         embedding_function=embedding_function,
         data_loader=image_loader
     )
+    insert_data()
     
     return 'ChromaDB code executed'
+
+def numpy_arays(image_directory):
+    for x in os.listdir(image_directory):
+        if x.endswith('.jpg') or x.endswith('.png'):
+            filepath = os.path.join(image_directory,x)
+            numpy_images = image_to_array(filepath)
+    return numpy_images 
+
+def insert_data():
+    x = 0
+    images = numpy_arays(image_directory)
+    ids = []
+
+    for img in images:
+        x += 1
+        ids.append(f"id:{x}")
+
+    collection.add(
+        ids = ids,
+        images=images
+    )
+
     
 
 if __name__ == '__main__':
