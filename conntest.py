@@ -27,13 +27,13 @@ def image_to_array(image_path):
 
 embedding_function = OpenCLIPEmbeddingFunction()
 data_loader = ImageLoader()
-client = chromadb.PersistentClient(path="/users/joseignacionaranjo/Downloads/chroma")
+client = chromadb.PersistentClient(path="/users/alf/Downloads/chroma")
 
 
 #python-experiments-production.up.railway.app
 
 collection = client.create_collection(
-         name = "photosembedding1234",
+         name = "photosembedding12346",
          embedding_function=embedding_function,
             data_loader=data_loader
             )
