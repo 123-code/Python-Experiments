@@ -5,8 +5,8 @@ from flask import Flask, request, jsonify
 import os 
 from image_to_numpy import image_to_array
 
-image_directory = './uploads'
-token = os.environ.get("CHROMA_TOKEN") 
+image_directory = '../uploads'
+token = os.environ.get('CHROMA_TOKEN')
 global collection
 
 app = Flask(__name__)
