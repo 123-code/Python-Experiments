@@ -57,32 +57,38 @@ def chromadb_route():
         embedding_function=embedding_function,
         data_loader=image_loader
     )
+
+    def numpy_arays(image_directory):
+
+        for x in os.listdir(image_directory):
+            if x.endswith('.jpg') or x.endswith('.png'):
+                filepath = os.path.join(image_directory,x)
+                numpy_images = image_to_array(filepath)
+        return numpy_images 
+
+
+
+    def insert_data():
+
+        x = 0
+        images = numpy_arays(image_directory)
+        ids = []
+
+        for img in images:
+            x += 1
+            ids.append(f"id:{x}")
+
+        collection.add(
+            ids = ids,
+            images=images
+        )
+
+    
     insert_data()
     
     return 'ChromaDB code executed'
 
-def numpy_arays(image_directory):
-    for x in os.listdir(image_directory):
-        if x.endswith('.jpg') or x.endswith('.png'):
-            filepath = os.path.join(image_directory,x)
-            numpy_images = image_to_array(filepath)
-    return numpy_images 
 
-def insert_data():
-    x = 0
-    images = numpy_arays(image_directory)
-    ids = []
-
-    for img in images:
-        x += 1
-        ids.append(f"id:{x}")
-
-    collection.add(
-        ids = ids,
-        images=images
-    )
-
-    
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
