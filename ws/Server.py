@@ -46,7 +46,7 @@ def chromadb_route():
     client = chromadb.HttpClient(
         host="18.234.181.227",
         port=8000,
-        headers={"X-Chroma-Token": token}
+        headers={"X-Chroma-Token": "sk-mytoken"}
     )
     
     collections = client.list_collections()
@@ -59,6 +59,7 @@ def chromadb_route():
     )
 
     def numpy_arays(image_directory):
+        numpy_images = []
 
         for x in os.listdir(image_directory):
             if x.endswith('.jpg') or x.endswith('.png'):
@@ -72,11 +73,14 @@ def chromadb_route():
 
         x = 0
         images = numpy_arays(image_directory)
-        ids = []
 
-        for img in images:
-            x += 1
-            ids.append(f"id:{x}")
+        if not images:
+            print("No valid images found")
+            return 
+        
+        ids = [f"id:{i+1}" for i in range(len(images))]
+
+      
 
         collection.add(
             ids = ids,
