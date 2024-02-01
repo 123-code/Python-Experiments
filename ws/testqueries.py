@@ -12,13 +12,7 @@ print(client)
 collections = client.list_collections()
 collection = client.get_or_create_collection(name="your_collection_nam1e1")
 
-results = collection.query(
-    query_texts=["sunset"],
-    n_results=1
-)
 
-
-'''
 retrieved = collection.query(query_texts=["sunset"], include=['data'], n_results=1)
 for img in retrieved['data'][0]:
     plt.imshow(img)
@@ -26,5 +20,5 @@ for img in retrieved['data'][0]:
     plt.show()
 
 
-print(results)
-'''
+print(retrieved)
+

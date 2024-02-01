@@ -23,18 +23,17 @@ def image_to_array(image_path):
     return image_arrays
 
 
+image_arrays = image_to_array(image_dir)
 
-#image1 = image_to_array('../Downloads/IMG_4477.jpeg')
+
 
 embedding_function = OpenCLIPEmbeddingFunction()
 data_loader = ImageLoader()
 client = chromadb.PersistentClient(path="/users/alf/Downloads/chroma")
 
 
-#python-experiments-production.up.railway.app
-
 collection = client.create_collection(
-         name = "photosembedding12346",
+         name = "josei1",
          embedding_function=embedding_function,
             data_loader=data_loader
             )
@@ -42,22 +41,27 @@ collection = client.create_collection(
 
 
 image_arrays = image_to_array(image_dir)
+num_images = len(image_arrays)
+ids = []
+for i in range(num_images):
+    ids.append(f'id{i}')
 
 if image_arrays:
     collection.add(
-        ids=['id1'],
+        ids=ids,
         images = image_arrays
     )
 else:
     print("no images found")
 
-result = collection.query(
+retrieved = collection.query(
     query_texts = ["sky"]
 )
-retrieved = collection.query(query_texts=["sunset"], include=['data'], n_results=1)
-for img in retrieved['data'][0]:
+for img in retrieved:
+    
     plt.imshow(img)
     plt.axis("off")
     plt.show()
-print(result)
+
+print(retrieved)
 
