@@ -5,7 +5,7 @@ from flask import Flask, request, jsonify
 import os 
 from image_to_numpy import image_to_array
 
-image_directory = '../uploads'
+image_directory = './uploads'
 token = os.environ.get('CHROMA_TOKEN')
 global collection
 
@@ -73,12 +73,19 @@ def chromadb_route():
 
         x = 0
         images = numpy_arays(image_directory)
+        print(len(images))
 
         if not images:
             print("No valid images found")
             return 
+        else:
+            print("found images")
         
         ids = [f"id:{i+1}" for i in range(len(images))]
+
+    
+        
+    
 
       
 
