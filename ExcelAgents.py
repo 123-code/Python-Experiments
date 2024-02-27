@@ -84,7 +84,7 @@ class ExcelEmailSender(BaseTool):
             html_content=html_content)
         
         try:
-            sg = SendGridAPIClient('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')
+            sg = SendGridAPIClient('')
             response = sg.send(message)     
             print(response.status_code)
             print(response.body)   
