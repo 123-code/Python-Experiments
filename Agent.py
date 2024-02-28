@@ -46,7 +46,7 @@ Otherwise, reply CONTINUE, or the reason why the task is not solved yet."""
 )
 
 task = """
-Tell me a joke.
+Write a rust script to output numbers 1 to 100 and then the user_proxy agent should run the script
 """
 
 groupchat = autogen.GroupChat(agents=[user_proxy,coder,assistant],messages=[],max_round=12)
